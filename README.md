@@ -194,13 +194,13 @@ sequenceDiagram
 [pipx](https://pipx.pypa.io/) installs the CLI globally and handles PATH automatically:
 
 ```bash
-pipx install git+https://github.com/your-username/redis-tui.git
+pipx install git+https://github.com/alissonviana/redis-tui.git
 ```
 
 ### With pip
 
 ```bash
-pip install git+https://github.com/your-username/redis-tui.git
+pip install git+https://github.com/alissonviana/redis-tui.git
 ```
 
 > **Windows note:** If `redis-tui` is not recognized after install, pip may have installed it to a directory not in your PATH. Use `python -m redis_tui` instead, or add Python's `Scripts` folder to your PATH:
@@ -213,7 +213,7 @@ pip install git+https://github.com/your-username/redis-tui.git
 ### From source (development)
 
 ```bash
-git clone https://github.com/your-username/redis-tui.git
+git clone https://github.com/alissonviana/redis-tui.git
 cd redis-tui
 pip install -e .
 ```
