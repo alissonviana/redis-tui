@@ -3,6 +3,7 @@ from textual.app import ComposeResult
 from textual.containers import Vertical, Horizontal
 from textual.screen import ModalScreen
 from textual.widgets import Button, Input, Label, Select, Static
+from textual.widgets.select import NoSelection
 from redis_tui.models.settings import AppSettings
 
 
@@ -49,9 +50,30 @@ class SettingsScreen(ModalScreen):
 
             yield Label("Theme", markup=False)
             yield Select(
-                [("Dark", "dark"), ("Light", "light")],
+                [
+                    ("Textual Dark", "textual-dark"),
+                    ("Textual Light", "textual-light"),
+                    ("Nord", "nord"),
+                    ("Gruvbox", "gruvbox"),
+                    ("Dracula", "dracula"),
+                    ("Tokyo Night", "tokyo-night"),
+                    ("Monokai", "monokai"),
+                    ("Flexoki", "flexoki"),
+                    ("Catppuccin Mocha", "catppuccin-mocha"),
+                    ("Catppuccin Latte", "catppuccin-latte"),
+                    ("Catppuccin Frappe", "catppuccin-frappe"),
+                    ("Catppuccin Macchiato", "catppuccin-macchiato"),
+                    ("Solarized Dark", "solarized-dark"),
+                    ("Solarized Light", "solarized-light"),
+                    ("Rose Pine", "rose-pine"),
+                    ("Rose Pine Moon", "rose-pine-moon"),
+                    ("Rose Pine Dawn", "rose-pine-dawn"),
+                    ("Atom One Dark", "atom-one-dark"),
+                    ("Atom One Light", "atom-one-light"),
+                ],
                 value=self._current.theme,
                 id="sel-theme",
+                allow_blank=False,
             )
 
             yield Static("", id="settings-error", markup=False)
@@ -79,7 +101,7 @@ class SettingsScreen(ModalScreen):
             refresh = int(self.query_one("#inp-refresh", Input).value.strip() or "0")
             max_keys = int(self.query_one("#inp-max-keys", Input).value.strip() or "10000")
             theme_select = self.query_one("#sel-theme", Select)
-            theme = str(theme_select.value) if theme_select.value is not None else "dark"
+            theme = str(theme_select.value) if not isinstance(theme_select.value, NoSelection) else "dark"
 
             if scan_count < 1:
                 raise ValueError("SCAN count must be >= 1")

@@ -1,5 +1,6 @@
 from __future__ import annotations
 from textual.app import ComposeResult
+from textual.binding import Binding
 from textual.containers import Horizontal, Vertical
 from textual.screen import Screen
 from textual.widgets import Button, Label, ListItem, ListView, Static
@@ -32,7 +33,7 @@ class ConnectionScreen(Screen):
         ("n", "new_connection", "New"),
         ("e", "edit_connection", "Edit"),
         ("d", "delete_connection", "Delete"),
-        ("enter", "connect", "Connect"),
+        Binding("enter", "connect", "Connect", priority=True),
     ]
 
     def __init__(self, *args, **kwargs):
@@ -112,4 +113,4 @@ class ConnectionScreen(Screen):
             actions[event.button.id]()
 
     def on_list_view_selected(self, event: ListView.Selected) -> None:
-        self.action_connect()
+        pass  # single click only highlights; use Enter or Connect button to connect

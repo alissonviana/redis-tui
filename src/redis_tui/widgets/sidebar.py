@@ -2,6 +2,7 @@ from __future__ import annotations
 from textual.app import ComposeResult
 from textual.containers import Vertical, Horizontal
 from textual.widgets import Input, Select, Label, Static, Button
+from textual.widgets.select import NoSelection
 from textual.message import Message
 from textual.reactive import reactive
 from redis_tui.widgets.key_tree import RedisKeyTree
@@ -63,7 +64,7 @@ class Sidebar(Vertical):
         label.update(f" {self.key_count} keys{suffix}")
 
     def on_select_changed(self, event: Select.Changed) -> None:
-        if event.select.id == "db-selector" and event.value is not None:
+        if event.select.id == "db-selector" and not isinstance(event.value, NoSelection):
             self.post_message(self.DbChanged(int(event.value)))
 
     def on_input_changed(self, event: Input.Changed) -> None:

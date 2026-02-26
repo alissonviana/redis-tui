@@ -1,21 +1,25 @@
 /* ─────────────────────────── App Shell ─────────────────────────── */
 
 App {
-    background: #1a1a2e;
-    color: #e0e0e0;
+    background: $background;
+    color: $foreground;
 }
 
 Header {
-    background: #16213e;
-    color: #00d4ff;
+    background: $panel;
+    color: $primary;
     text-style: bold;
     height: 1;
     dock: top;
 }
 
+HeaderIcon {
+    display: none;
+}
+
 Footer {
-    background: #16213e;
-    color: #888888;
+    background: $panel;
+    color: $foreground 50%;
     height: 1;
     dock: bottom;
 }
@@ -23,28 +27,28 @@ Footer {
 /* ─────────────────────── Connection Screen ─────────────────────── */
 
 #connection-screen {
-    background: #1a1a2e;
+    background: $background;
     align: center middle;
 }
 
 #connection-panel {
     width: 70;
     height: auto;
-    background: #16213e;
-    border: solid #00d4ff;
+    background: $panel;
+    border: solid $primary;
     padding: 1 2;
 }
 
 #connection-title {
     text-align: center;
-    color: #00d4ff;
+    color: $primary;
     text-style: bold;
     margin-bottom: 1;
 }
 
 #connections-list {
     height: 15;
-    border: solid #333355;
+    border: solid $surface;
     margin-bottom: 1;
 }
 
@@ -67,53 +71,59 @@ Footer {
 /* ──────────────────────────── Sidebar ──────────────────────────── */
 
 #sidebar {
-    dock: left;
     width: 35;
-    background: #16213e;
-    border-right: solid #2a2a4a;
+    height: 1fr;
+    background: $panel;
     layout: vertical;
     padding: 0;
 }
 
+#sidebar-divider {
+    width: 1;
+    height: 1fr;
+    background: $surface;
+}
+
+#sidebar-divider:hover {
+    background: $primary 60%;
+}
+
 #db-selector {
-    height: 3;
+    height: auto;
     margin: 0 1;
-    background: #16213e;
-    border: solid #2a2a4a;
-    color: #e0e0e0;
 }
 
 #search-input {
     height: 3;
     margin: 0 1;
-    background: #1a1a2e;
-    border: solid #2a2a4a;
-    color: #e0e0e0;
+    background: $background;
+    border: solid $surface;
+    color: $foreground;
 }
 
 #search-input:focus {
-    border: solid #00d4ff;
+    border: solid $primary;
 }
 
 #key-tree {
     height: 1fr;
-    background: #16213e;
-    scrollbar-color: #2a2a4a;
+    background: $panel;
+    scrollbar-color: $surface;
     scrollbar-size: 1 1;
 }
 
 #key-tree > .tree--cursor {
-    background: #00d4ff 20%;
+    background: $primary 20%;
 }
 
 #key-tree > .tree--highlight {
-    background: #00d4ff 10%;
+    background: $primary 10%;
 }
 
 #key-count {
     height: 1;
-    background: #0f0f2a;
-    color: #666688;
+    background: $background;
+    color: $foreground 40%;
     text-align: center;
     padding: 0 1;
 }
@@ -123,13 +133,13 @@ Footer {
 #content-area {
     width: 1fr;
     height: 1fr;
-    background: #1a1a2e;
+    background: $background;
     layout: vertical;
 }
 
 #empty-state {
     content-align: center middle;
-    color: #444466;
+    color: $foreground 30%;
     width: 1fr;
     height: 1fr;
 }
@@ -143,29 +153,29 @@ Footer {
 
 #key-header {
     height: 4;
-    background: #16213e;
-    border-bottom: solid #2a2a4a;
+    background: $panel;
+    border-bottom: solid $surface;
     layout: horizontal;
     align: center middle;
     padding: 0 1;
 }
 
 #key-name-label {
-    color: #00d4ff;
+    color: $primary;
     text-style: bold;
     width: 1fr;
     overflow: hidden;
 }
 
 #key-type-badge {
-    background: #2a2a4a;
-    color: #00d4ff;
+    background: $surface;
+    color: $primary;
     padding: 0 1;
     margin: 0 1;
 }
 
 #key-ttl-label {
-    color: #888888;
+    color: $foreground 50%;
     margin: 0 1;
 }
 
@@ -176,19 +186,15 @@ Footer {
 
 #key-actions Button {
     min-width: 8;
-    height: 1;
+    height: auto;
     margin: 0;
-    background: #2a2a4a;
     border: none;
-    color: #cccccc;
-}
-
-#key-actions Button:hover {
-    background: #3a3a5a;
+    border-top: none;
+    border-bottom: none;
 }
 
 #key-actions Button.-danger {
-    color: #ff4444;
+    color: $error;
 }
 
 /* ─────────────────────── String Viewer ─────────────────────────── */
@@ -203,13 +209,13 @@ Footer {
 }
 
 #string-viewer ContentTab {
-    background: #1a1a2e;
+    background: $background;
 }
 
 #value-textarea {
     height: 1fr;
-    background: #1a1a2e;
-    color: #e0e0e0;
+    background: $background;
+    color: $foreground;
     border: none;
 }
 
@@ -219,8 +225,8 @@ Footer {
 
 #string-actions {
     height: 3;
-    background: #16213e;
-    border-top: solid #2a2a4a;
+    background: $panel;
+    border-top: solid $surface;
     layout: horizontal;
     align: right middle;
     padding: 0 1;
@@ -229,7 +235,7 @@ Footer {
 /* ─────────────────────── Connection Dialog ─────────────────────── */
 
 #connection-dialog {
-    background: #1a1a2e 80%;
+    background: $background 80%;
     align: center middle;
 }
 
@@ -237,31 +243,31 @@ Footer {
     width: 70;
     height: auto;
     max-height: 90vh;
-    background: #16213e;
-    border: solid #00d4ff;
+    background: $panel;
+    border: solid $primary;
     padding: 1 2;
 }
 
 #connection-form .form-title {
     text-align: center;
-    color: #00d4ff;
+    color: $primary;
     text-style: bold;
     margin-bottom: 1;
 }
 
 #connection-form Label {
-    color: #aaaacc;
+    color: $foreground 70%;
     margin-top: 1;
 }
 
 #connection-form Input {
-    background: #1a1a2e;
-    border: solid #2a2a4a;
-    color: #e0e0e0;
+    background: $background;
+    border: solid $surface;
+    color: $foreground;
 }
 
 #connection-form Input:focus {
-    border: solid #00d4ff;
+    border: solid $primary;
 }
 
 #connection-form Switch {
@@ -288,15 +294,15 @@ Footer {
 /* ─────────────────────── Confirm Dialog ────────────────────────── */
 
 #confirm-dialog {
-    background: #1a1a2e 80%;
+    background: $background 80%;
     align: center middle;
 }
 
 #confirm-panel {
     width: 50;
     height: auto;
-    background: #16213e;
-    border: solid #ff4444;
+    background: $panel;
+    border: solid $error;
     padding: 1 2;
 }
 
@@ -316,52 +322,34 @@ Footer {
 }
 
 /* ─────────────────────── Buttons ───────────────────────────────── */
-
-Button.-primary {
-    background: #00d4ff;
-    color: #000000;
-}
-
-Button.-primary:hover {
-    background: #00b8d4;
-}
-
-Button.-danger {
-    background: #ff4444;
-    color: #ffffff;
-}
-
-Button.-danger:hover {
-    background: #cc2222;
-}
-
-Button {
-    background: #2a2a4a;
-    color: #e0e0e0;
-    border: none;
-}
-
-Button:hover {
-    background: #3a3a5a;
-}
+/* Base button styling is handled by Textual's theme system.        */
+/* Only override where the app needs specific behaviour.            */
 
 /* ─────────────────────── Select ────────────────────────────────── */
 
 Select {
-    background: #1a1a2e;
-    border: solid #2a2a4a;
-    color: #e0e0e0;
+    height: auto;
+}
+
+SelectCurrent {
+    background: $background;
+    border: solid $surface;
+    color: $foreground;
+}
+
+Select:focus > SelectCurrent {
+    border: solid $primary;
 }
 
 SelectOverlay {
-    background: #1a1a2e;
-    border: solid #00d4ff;
+    background: $background;
+    border: solid $primary;
 }
 
 /* ─────────────────────── ListView ──────────────────────────────── */
 
 ListView {
-    background: #1a1a2e;
+    background: $background;
     border: none;
 }
 
@@ -370,32 +358,37 @@ ListItem {
     padding: 0 1;
 }
 
-ListItem:hover {
-    background: #2a2a4a;
+ListItem.-hovered {
+    background: $surface;
 }
 
-ListItem.-highlighted {
-    background: #00d4ff 20%;
-    color: #ffffff;
+ListItem.-highlight {
+    background: $primary 15%;
+    color: $foreground;
+    border-left: thick $primary;
+}
+
+ListItem.-highlight.-hovered {
+    background: $primary 25%;
 }
 
 /* ─────────────────────── TabbedContent ─────────────────────────── */
 
 TabbedContent {
-    background: #1a1a2e;
+    background: $background;
 }
 
 Tabs {
-    background: #16213e;
+    background: $panel;
 }
 
 Tab {
-    color: #888888;
+    color: $foreground 50%;
 }
 
 Tab.-active {
-    color: #00d4ff;
-    background: #1a1a2e;
+    color: $primary;
+    background: $background;
 }
 
 /* ─────────────────────── Tabs (Main Content) ───────────────────── */
@@ -439,8 +432,8 @@ Tab.-active {
 #zset-add-row {
     height: 3;
     layout: horizontal;
-    background: #16213e;
-    border-top: solid #2a2a4a;
+    background: $panel;
+    border-top: solid $surface;
     padding: 0 1;
     align: center middle;
 }
@@ -450,9 +443,9 @@ Tab.-active {
 #set-add-row Input,
 #zset-add-row Input {
     height: 3;
-    background: #1a1a2e;
-    border: solid #2a2a4a;
-    color: #e0e0e0;
+    background: $background;
+    border: solid $surface;
+    color: $foreground;
     margin-right: 1;
 }
 
@@ -460,7 +453,7 @@ Tab.-active {
 #list-add-row Input:focus,
 #set-add-row Input:focus,
 #zset-add-row Input:focus {
-    border: solid #00d4ff;
+    border: solid $primary;
 }
 
 #hash-actions,
@@ -469,8 +462,8 @@ Tab.-active {
 #zset-actions {
     height: 3;
     layout: horizontal;
-    background: #16213e;
-    border-top: solid #2a2a4a;
+    background: $panel;
+    border-top: solid $surface;
     padding: 0 1;
     align: right middle;
 }
@@ -484,21 +477,21 @@ Tab.-active {
 
 #console-log {
     height: 1fr;
-    background: #0f0f1a;
+    background: $background;
     border: none;
     scrollbar-size: 1 1;
 }
 
 #console-input {
     height: 3;
-    background: #1a1a2e;
-    border: solid #2a2a4a;
-    border-top: solid #00d4ff;
-    color: #00d4ff;
+    background: $background;
+    border: solid $surface;
+    border-top: solid $primary;
+    color: $primary;
 }
 
 #console-input:focus {
-    border: solid #00d4ff;
+    border: solid $primary;
 }
 
 /* ─────────────────────── Server Info ───────────────────────────── */
@@ -510,7 +503,7 @@ Tab.-active {
 /* ─────────────────────── New Key Dialog ────────────────────────── */
 
 #new-key-dialog {
-    background: #1a1a2e 80%;
+    background: $background 80%;
     align: center middle;
 }
 
@@ -518,8 +511,8 @@ Tab.-active {
     width: 60;
     height: auto;
     max-height: 90vh;
-    background: #16213e;
-    border: solid #00d4ff;
+    background: $panel;
+    border: solid $primary;
     padding: 1 2;
 }
 
@@ -532,15 +525,15 @@ Tab.-active {
 /* ─────────────────────── TTL Dialog ────────────────────────────── */
 
 #ttl-dialog {
-    background: #1a1a2e 80%;
+    background: $background 80%;
     align: center middle;
 }
 
 #ttl-panel {
     width: 55;
     height: auto;
-    background: #16213e;
-    border: solid #00d4ff;
+    background: $panel;
+    border: solid $primary;
     padding: 1 2;
 }
 
@@ -551,19 +544,19 @@ Tab.-active {
 }
 
 #ttl-panel Label {
-    color: #aaaacc;
+    color: $foreground 70%;
     margin-top: 1;
 }
 
 #ttl-panel Input {
-    background: #1a1a2e;
-    border: solid #2a2a4a;
-    color: #e0e0e0;
+    background: $background;
+    border: solid $surface;
+    color: $foreground;
     margin-top: 1;
 }
 
 #ttl-panel Input:focus {
-    border: solid #00d4ff;
+    border: solid $primary;
 }
 
 /* ─────────────────────── Pub/Sub Widget ────────────────────────── */
@@ -579,15 +572,15 @@ PubSubWidget {
 
 #pubsub-controls Input {
     height: 3;
-    background: #1a1a2e;
-    border: solid #2a2a4a;
-    color: #e0e0e0;
+    background: $background;
+    border: solid $surface;
+    color: $foreground;
     width: 1fr;
     margin-right: 1;
 }
 
 #pubsub-controls Input:focus {
-    border: solid #00d4ff;
+    border: solid $primary;
 }
 
 #pubsub-log {
@@ -608,21 +601,21 @@ MemoryWidget {
 
 #memory-controls Input {
     height: 3;
-    background: #1a1a2e;
-    border: solid #2a2a4a;
-    color: #e0e0e0;
+    background: $background;
+    border: solid $surface;
+    color: $foreground;
     width: 1fr;
     margin-right: 1;
 }
 
 #memory-controls Input:focus {
-    border: solid #00d4ff;
+    border: solid $primary;
 }
 
 #memory-status {
     height: 1;
     padding: 0 1;
-    color: #888888;
+    color: $foreground 50%;
 }
 
 #memory-table {
@@ -645,25 +638,25 @@ RenameDialog {
 
 #rename-dialog .form-title {
     text-align: center;
-    color: #00d4ff;
+    color: $primary;
     text-style: bold;
     margin-bottom: 1;
 }
 
 #rename-dialog Label {
-    color: #aaaacc;
+    color: $foreground 70%;
     margin-top: 1;
 }
 
 #rename-dialog Input {
-    background: #1a1a2e;
-    border: solid #2a2a4a;
-    color: #e0e0e0;
+    background: $background;
+    border: solid $surface;
+    color: $foreground;
     margin-top: 1;
 }
 
 #rename-dialog Input:focus {
-    border: solid #00d4ff;
+    border: solid $primary;
 }
 
 #rename-error {
@@ -682,8 +675,8 @@ RenameDialog {
 
 #batch-bar {
     height: 3;
-    background: #1a1a2e;
-    border-top: solid #ff4444;
+    background: $background;
+    border-top: solid $error;
     layout: horizontal;
     align: center middle;
     padding: 0 1;
@@ -695,7 +688,7 @@ RenameDialog {
 
 #batch-count {
     width: 1fr;
-    color: #ff9900;
+    color: $warning;
     text-style: bold;
 }
 
@@ -707,7 +700,7 @@ RenameDialog {
 
 /* Selected tree node highlight */
 .tree-selected-node {
-    color: #ff9900;
+    color: $warning;
 }
 
 /* ─────────────────────── Settings Screen ───────────────────────── */
@@ -717,8 +710,8 @@ SettingsScreen {
 }
 
 #settings-panel {
-    background: #16213e;
-    border: solid #00d4ff;
+    background: $panel;
+    border: solid $primary;
     padding: 1 2;
     width: 60;
     height: auto;
@@ -727,25 +720,25 @@ SettingsScreen {
 
 #settings-title {
     text-align: center;
-    color: #00d4ff;
+    color: $primary;
     text-style: bold;
     margin-bottom: 1;
 }
 
 #settings-panel Label {
-    color: #aaaacc;
+    color: $foreground 70%;
     margin-top: 1;
 }
 
 #settings-panel Input {
-    background: #1a1a2e;
-    border: solid #2a2a4a;
-    color: #e0e0e0;
+    background: $background;
+    border: solid $surface;
+    color: $foreground;
     margin-top: 0;
 }
 
 #settings-panel Input:focus {
-    border: solid #00d4ff;
+    border: solid $primary;
 }
 
 #settings-panel Select {
@@ -754,7 +747,7 @@ SettingsScreen {
 
 #settings-error {
     height: 1;
-    color: #ff4444;
+    color: $error;
     margin-top: 1;
     text-align: center;
 }

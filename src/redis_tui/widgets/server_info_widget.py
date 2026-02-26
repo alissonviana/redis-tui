@@ -1,8 +1,7 @@
 from __future__ import annotations
 from textual.app import ComposeResult
-from textual.containers import Vertical, Horizontal
-from textual.widgets import DataTable, Label, Static, TabbedContent, TabPane
-from textual.reactive import reactive
+from textual.containers import Vertical
+from textual.widgets import DataTable, TabbedContent, TabPane
 
 
 class ServerInfoWidget(Vertical):
@@ -14,25 +13,45 @@ class ServerInfoWidget(Vertical):
 
     def compose(self) -> ComposeResult:
         with TabbedContent():
-            with TabPane("Overview", id="tab-overview"):
-                yield self._make_overview()
-            with TabPane("Memory", id="tab-memory"):
-                yield self._make_memory()
-            with TabPane("Stats", id="tab-stats"):
-                yield self._make_stats()
-            with TabPane("Clients", id="tab-clients"):
-                yield self._make_clients()
-            with TabPane("Keyspace", id="tab-keyspace"):
-                yield self._make_keyspace()
-            with TabPane("Slow Log", id="tab-slowlog"):
-                yield self._make_slowlog()
+            with TabPane("Overview", id="sinfo-tab-overview"):
+                yield DataTable(id="overview-table", cursor_type="none", zebra_stripes=True)
+            with TabPane("Memory", id="sinfo-tab-memory"):
+                yield DataTable(id="memory-table", cursor_type="none", zebra_stripes=True)
+            with TabPane("Stats", id="sinfo-tab-stats"):
+                yield DataTable(id="stats-table", cursor_type="none", zebra_stripes=True)
+            with TabPane("Clients", id="sinfo-tab-clients"):
+                yield DataTable(id="clients-table", cursor_type="none", zebra_stripes=True)
+            with TabPane("Keyspace", id="sinfo-tab-keyspace"):
+                yield DataTable(id="keyspace-table", cursor_type="none", zebra_stripes=True)
+            with TabPane("Slow Log", id="sinfo-tab-slowlog"):
+                yield DataTable(id="slowlog-table", cursor_type="row", zebra_stripes=True)
+
+    def on_mount(self) -> None:
+        self._setup_columns()
+        self._populate_all()
+
+    def _setup_columns(self) -> None:
+        self.query_one("#overview-table", DataTable).add_columns("Property", "Value")
+        self.query_one("#memory-table", DataTable).add_columns("Property", "Value")
+        self.query_one("#stats-table", DataTable).add_columns("Property", "Value")
+        self.query_one("#clients-table", DataTable).add_columns("Property", "Value")
+        self.query_one("#keyspace-table", DataTable).add_columns("Database", "Keys", "Expires", "Avg TTL")
+        self.query_one("#slowlog-table", DataTable).add_columns("ID", "Time (ms)", "Command")
 
     def _fmt(self, key: str, default: str = "N/A") -> str:
         return str(self._info.get(key, default))
 
-    def _make_overview(self) -> DataTable:
-        table = DataTable(id="overview-table", cursor_type="none", zebra_stripes=True)
-        table.add_columns("Property", "Value")
+    def _populate_all(self) -> None:
+        self._populate_overview()
+        self._populate_memory()
+        self._populate_stats()
+        self._populate_clients()
+        self._populate_keyspace()
+        self._populate_slowlog_placeholder()
+
+    def _populate_overview(self) -> None:
+        table = self.query_one("#overview-table", DataTable)
+        table.clear()
         rows = [
             ("Redis Version", self._fmt("redis_version")),
             ("Mode", self._fmt("redis_mode")),
@@ -45,11 +64,10 @@ class ServerInfoWidget(Vertical):
         ]
         for row in rows:
             table.add_row(*row)
-        return table
 
-    def _make_memory(self) -> DataTable:
-        table = DataTable(id="memory-table", cursor_type="none", zebra_stripes=True)
-        table.add_columns("Property", "Value")
+    def _populate_memory(self) -> None:
+        table = self.query_one("#memory-table", DataTable)
+        table.clear()
 
         def fmt_bytes(key: str) -> str:
             val = self._info.get(key, 0)
@@ -68,11 +86,10 @@ class ServerInfoWidget(Vertical):
         ]
         for row in rows:
             table.add_row(*row)
-        return table
 
-    def _make_stats(self) -> DataTable:
-        table = DataTable(id="stats-table", cursor_type="none", zebra_stripes=True)
-        table.add_columns("Property", "Value")
+    def _populate_stats(self) -> None:
+        table = self.query_one("#stats-table", DataTable)
+        table.clear()
         rows = [
             ("Total Commands Processed", self._fmt("total_commands_processed")),
             ("Instantaneous Ops/sec", self._fmt("instantaneous_ops_per_sec")),
@@ -85,11 +102,10 @@ class ServerInfoWidget(Vertical):
         ]
         for row in rows:
             table.add_row(*row)
-        return table
 
-    def _make_clients(self) -> DataTable:
-        table = DataTable(id="clients-table", cursor_type="none", zebra_stripes=True)
-        table.add_columns("Property", "Value")
+    def _populate_clients(self) -> None:
+        table = self.query_one("#clients-table", DataTable)
+        table.clear()
         rows = [
             ("Connected Clients", self._fmt("connected_clients")),
             ("Blocked Clients", self._fmt("blocked_clients")),
@@ -99,12 +115,10 @@ class ServerInfoWidget(Vertical):
         ]
         for row in rows:
             table.add_row(*row)
-        return table
 
-    def _make_keyspace(self) -> DataTable:
-        table = DataTable(id="keyspace-table", cursor_type="none", zebra_stripes=True)
-        table.add_columns("Database", "Keys", "Expires", "Avg TTL")
-        # Keyspace info is nested in the full INFO output
+    def _populate_keyspace(self) -> None:
+        table = self.query_one("#keyspace-table", DataTable)
+        table.clear()
         for key, val in self._info.items():
             if key.startswith("db") and isinstance(val, dict):
                 table.add_row(
@@ -115,24 +129,19 @@ class ServerInfoWidget(Vertical):
                 )
         if table.row_count == 0:
             table.add_row("(no databases)", "", "", "")
-        return table
 
-    def _make_slowlog(self) -> DataTable:
-        table = DataTable(
-            id="slowlog-table", cursor_type="row", zebra_stripes=True
-        )
-        table.add_columns("ID", "Time (ms)", "Command")
-        table.add_row("--", "--", "Click 'Refresh' in Server Info tab to load")
-        return table
+    def _populate_slowlog_placeholder(self) -> None:
+        table = self.query_one("#slowlog-table", DataTable)
+        table.clear()
+        table.add_row("--", "--", "Loading...")
+
+    def update_info(self, info: dict) -> None:
+        """Update all tables with new server info data."""
+        self._info = info
+        self._populate_all()
 
     def update_slowlog(self, entries: list) -> None:
-        """Populate the slow log table with entries from SLOWLOG GET.
-
-        Args:
-            entries: List of slow log entries as returned by redis-py
-                     (each entry is a list/tuple or a dict depending on
-                     the decode_responses setting).
-        """
+        """Populate the slow log table with entries from SLOWLOG GET."""
         table = self.query_one("#slowlog-table", DataTable)
         table.clear()
         for entry in entries:

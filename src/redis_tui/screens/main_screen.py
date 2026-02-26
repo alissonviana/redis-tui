@@ -1,7 +1,9 @@
 from __future__ import annotations
 from textual.app import ComposeResult
 from textual.containers import Horizontal
+from textual.events import MouseDown, MouseMove, MouseUp
 from textual.screen import Screen
+from textual.widget import Widget
 from textual.widgets import Footer, Header, TabbedContent, TabPane
 from redis_tui.models.connection import ConnectionConfig
 from redis_tui.models.key_info import KeyInfo, KeyType
@@ -27,6 +29,43 @@ from redis_tui.screens.rename_dialog import RenameDialog
 from redis_tui.screens.settings_screen import SettingsScreen
 from redis_tui.widgets.pubsub_widget import PubSubWidget
 from redis_tui.widgets.memory_widget import MemoryWidget
+
+
+class SidebarDivider(Widget):
+    """Draggable vertical divider to resize the sidebar."""
+
+    _SIDEBAR_MIN = 15
+    _SIDEBAR_MAX = 80
+
+    def __init__(self) -> None:
+        super().__init__(id="sidebar-divider")
+        self._dragging = False
+        self._drag_start_x = 0
+        self._sidebar_start_width = 0
+
+    def on_mouse_down(self, event: MouseDown) -> None:
+        event.stop()
+        self._dragging = True
+        self._drag_start_x = event.screen_x
+        self._sidebar_start_width = self.screen.query_one(Sidebar).size.width
+        self.capture_mouse()
+
+    def on_mouse_move(self, event: MouseMove) -> None:
+        if not self._dragging:
+            return
+        event.stop()
+        delta = event.screen_x - self._drag_start_x
+        new_width = max(self._SIDEBAR_MIN, min(self._SIDEBAR_MAX, self._sidebar_start_width + delta))
+        self.screen.query_one(Sidebar).styles.width = new_width
+
+    def on_mouse_up(self, event: MouseUp) -> None:
+        if self._dragging:
+            event.stop()
+            self._dragging = False
+            self.release_mouse()
+
+    def render(self) -> str:
+        return ""
 
 
 class MainScreen(Screen):
@@ -67,6 +106,7 @@ class MainScreen(Screen):
         yield Header()
         with Horizontal(id="main-layout"):
             yield Sidebar()
+            yield SidebarDivider()
             with TabbedContent(id="content-tabs"):
                 with TabPane("Browser", id="tab-browser"):
                     yield ValueViewer()
@@ -84,7 +124,6 @@ class MainScreen(Screen):
         self.title = f"Redis TUI - {self._config.name}"
         self.sub_title = f"db{self._config.db}"
         self.run_worker(self._load_all_keys(), exclusive=True, name="load-keys")
-        self.run_worker(self._load_server_info(), name="load-info")
         self.run_worker(self._load_db_counts(), name="load-db-counts")
 
     async def _load_all_keys(self) -> None:
@@ -130,15 +169,11 @@ class MainScreen(Screen):
     async def _load_server_info(self) -> None:
         try:
             info = await self._client.get_server_info()
-            # Replace server info widget
-            info_pane = self.query_one("#tab-info")
-            await info_pane.query("#server-info-widget").remove()
-            new_widget = ServerInfoWidget(info)
-            await info_pane.mount(new_widget)
-            # Populate slow log
+            widget = self.query_one(ServerInfoWidget)
+            widget.update_info(info)
             try:
                 slowlog = await self._manager.get_client().slowlog_get(128)
-                new_widget.update_slowlog(slowlog)
+                widget.update_slowlog(slowlog)
             except Exception:
                 pass
         except Exception as e:
@@ -161,7 +196,7 @@ class MainScreen(Screen):
         self.app.pop_screen()
 
     def action_toggle_dark(self) -> None:
-        self.app.dark = not self.app.dark
+        self.app.action_change_theme()
 
     def action_new_key(self) -> None:
         self.app.push_screen(NewKeyDialog(), self._on_new_key)
@@ -207,10 +242,13 @@ class MainScreen(Screen):
         else:
             tabs.active = "tab-console"
 
+    def on_tabbed_content_tab_activated(self, event: TabbedContent.TabActivated) -> None:
+        if event.tabbed_content.id == "content-tabs" and event.pane and event.pane.id == "tab-info":
+            self.run_worker(self._load_server_info(), name="load-info")
+
     def action_show_server_info(self) -> None:
         tabs = self.query_one("#content-tabs", TabbedContent)
         tabs.active = "tab-info"
-        self.run_worker(self._load_server_info(), name="load-info")
 
     def action_show_pubsub(self) -> None:
         tabs = self.query_one("#content-tabs", TabbedContent)
@@ -225,7 +263,7 @@ class MainScreen(Screen):
             if result is not None:
                 self._settings = result
                 self._settings_store.save(result)
-                self.app.dark = result.theme != "light"
+                self.app.theme = result.theme
                 self.notify("Settings saved", severity="information")
 
         self.app.push_screen(SettingsScreen(self._settings), handle_settings)

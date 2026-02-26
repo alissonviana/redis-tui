@@ -29,7 +29,7 @@ class RedisTuiApp(App):
 
     def on_mount(self) -> None:
         # Apply theme from settings
-        self.dark = self._settings.theme != "light"
+        self.theme = self._settings.theme
         self.push_screen(ConnectionScreen())
 
     def connect_to(self, config: ConnectionConfig) -> None:
