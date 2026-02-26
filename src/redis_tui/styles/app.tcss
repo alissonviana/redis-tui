@@ -1,0 +1,771 @@
+/* ─────────────────────────── App Shell ─────────────────────────── */
+
+App {
+    background: #1a1a2e;
+    color: #e0e0e0;
+}
+
+Header {
+    background: #16213e;
+    color: #00d4ff;
+    text-style: bold;
+    height: 1;
+    dock: top;
+}
+
+Footer {
+    background: #16213e;
+    color: #888888;
+    height: 1;
+    dock: bottom;
+}
+
+/* ─────────────────────── Connection Screen ─────────────────────── */
+
+#connection-screen {
+    background: #1a1a2e;
+    align: center middle;
+}
+
+#connection-panel {
+    width: 70;
+    height: auto;
+    background: #16213e;
+    border: solid #00d4ff;
+    padding: 1 2;
+}
+
+#connection-title {
+    text-align: center;
+    color: #00d4ff;
+    text-style: bold;
+    margin-bottom: 1;
+}
+
+#connections-list {
+    height: 15;
+    border: solid #333355;
+    margin-bottom: 1;
+}
+
+#connection-actions {
+    layout: horizontal;
+    height: auto;
+    align: center middle;
+}
+
+#connection-actions Button {
+    margin: 0 1;
+}
+
+/* ─────────────────────── Main Screen Layout ─────────────────────── */
+
+#main-screen {
+    layout: vertical;
+}
+
+/* ──────────────────────────── Sidebar ──────────────────────────── */
+
+#sidebar {
+    dock: left;
+    width: 35;
+    background: #16213e;
+    border-right: solid #2a2a4a;
+    layout: vertical;
+    padding: 0;
+}
+
+#db-selector {
+    height: 3;
+    margin: 0 1;
+    background: #16213e;
+    border: solid #2a2a4a;
+    color: #e0e0e0;
+}
+
+#search-input {
+    height: 3;
+    margin: 0 1;
+    background: #1a1a2e;
+    border: solid #2a2a4a;
+    color: #e0e0e0;
+}
+
+#search-input:focus {
+    border: solid #00d4ff;
+}
+
+#key-tree {
+    height: 1fr;
+    background: #16213e;
+    scrollbar-color: #2a2a4a;
+    scrollbar-size: 1 1;
+}
+
+#key-tree > .tree--cursor {
+    background: #00d4ff 20%;
+}
+
+#key-tree > .tree--highlight {
+    background: #00d4ff 10%;
+}
+
+#key-count {
+    height: 1;
+    background: #0f0f2a;
+    color: #666688;
+    text-align: center;
+    padding: 0 1;
+}
+
+/* ─────────────────────── Content Area ──────────────────────────── */
+
+#content-area {
+    width: 1fr;
+    height: 1fr;
+    background: #1a1a2e;
+    layout: vertical;
+}
+
+#empty-state {
+    content-align: center middle;
+    color: #444466;
+    width: 1fr;
+    height: 1fr;
+}
+
+#main-layout {
+    width: 1fr;
+    height: 1fr;
+}
+
+/* ─────────────────────── Key Header ────────────────────────────── */
+
+#key-header {
+    height: 4;
+    background: #16213e;
+    border-bottom: solid #2a2a4a;
+    layout: horizontal;
+    align: center middle;
+    padding: 0 1;
+}
+
+#key-name-label {
+    color: #00d4ff;
+    text-style: bold;
+    width: 1fr;
+    overflow: hidden;
+}
+
+#key-type-badge {
+    background: #2a2a4a;
+    color: #00d4ff;
+    padding: 0 1;
+    margin: 0 1;
+}
+
+#key-ttl-label {
+    color: #888888;
+    margin: 0 1;
+}
+
+#key-actions {
+    layout: horizontal;
+    height: auto;
+}
+
+#key-actions Button {
+    min-width: 8;
+    height: 1;
+    margin: 0;
+    background: #2a2a4a;
+    border: none;
+    color: #cccccc;
+}
+
+#key-actions Button:hover {
+    background: #3a3a5a;
+}
+
+#key-actions Button.-danger {
+    color: #ff4444;
+}
+
+/* ─────────────────────── String Viewer ─────────────────────────── */
+
+#string-viewer {
+    height: 1fr;
+    layout: vertical;
+}
+
+#string-viewer TabbedContent {
+    height: 1fr;
+}
+
+#string-viewer ContentTab {
+    background: #1a1a2e;
+}
+
+#value-textarea {
+    height: 1fr;
+    background: #1a1a2e;
+    color: #e0e0e0;
+    border: none;
+}
+
+#value-textarea:focus {
+    border: none;
+}
+
+#string-actions {
+    height: 3;
+    background: #16213e;
+    border-top: solid #2a2a4a;
+    layout: horizontal;
+    align: right middle;
+    padding: 0 1;
+}
+
+/* ─────────────────────── Connection Dialog ─────────────────────── */
+
+#connection-dialog {
+    background: #1a1a2e 80%;
+    align: center middle;
+}
+
+#connection-form {
+    width: 70;
+    height: auto;
+    max-height: 90vh;
+    background: #16213e;
+    border: solid #00d4ff;
+    padding: 1 2;
+}
+
+#connection-form .form-title {
+    text-align: center;
+    color: #00d4ff;
+    text-style: bold;
+    margin-bottom: 1;
+}
+
+#connection-form Label {
+    color: #aaaacc;
+    margin-top: 1;
+}
+
+#connection-form Input {
+    background: #1a1a2e;
+    border: solid #2a2a4a;
+    color: #e0e0e0;
+}
+
+#connection-form Input:focus {
+    border: solid #00d4ff;
+}
+
+#connection-form Switch {
+    margin-top: 1;
+}
+
+#dialog-actions {
+    layout: horizontal;
+    height: auto;
+    align: right middle;
+    margin-top: 1;
+}
+
+#dialog-actions Button {
+    margin-left: 1;
+}
+
+#test-result {
+    height: 1;
+    margin-top: 1;
+    text-align: center;
+}
+
+/* ─────────────────────── Confirm Dialog ────────────────────────── */
+
+#confirm-dialog {
+    background: #1a1a2e 80%;
+    align: center middle;
+}
+
+#confirm-panel {
+    width: 50;
+    height: auto;
+    background: #16213e;
+    border: solid #ff4444;
+    padding: 1 2;
+}
+
+#confirm-message {
+    text-align: center;
+    margin-bottom: 2;
+}
+
+#confirm-actions {
+    layout: horizontal;
+    height: auto;
+    align: center middle;
+}
+
+#confirm-actions Button {
+    margin: 0 1;
+}
+
+/* ─────────────────────── Buttons ───────────────────────────────── */
+
+Button.-primary {
+    background: #00d4ff;
+    color: #000000;
+}
+
+Button.-primary:hover {
+    background: #00b8d4;
+}
+
+Button.-danger {
+    background: #ff4444;
+    color: #ffffff;
+}
+
+Button.-danger:hover {
+    background: #cc2222;
+}
+
+Button {
+    background: #2a2a4a;
+    color: #e0e0e0;
+    border: none;
+}
+
+Button:hover {
+    background: #3a3a5a;
+}
+
+/* ─────────────────────── Select ────────────────────────────────── */
+
+Select {
+    background: #1a1a2e;
+    border: solid #2a2a4a;
+    color: #e0e0e0;
+}
+
+SelectOverlay {
+    background: #1a1a2e;
+    border: solid #00d4ff;
+}
+
+/* ─────────────────────── ListView ──────────────────────────────── */
+
+ListView {
+    background: #1a1a2e;
+    border: none;
+}
+
+ListItem {
+    background: transparent;
+    padding: 0 1;
+}
+
+ListItem:hover {
+    background: #2a2a4a;
+}
+
+ListItem.-highlighted {
+    background: #00d4ff 20%;
+    color: #ffffff;
+}
+
+/* ─────────────────────── TabbedContent ─────────────────────────── */
+
+TabbedContent {
+    background: #1a1a2e;
+}
+
+Tabs {
+    background: #16213e;
+}
+
+Tab {
+    color: #888888;
+}
+
+Tab.-active {
+    color: #00d4ff;
+    background: #1a1a2e;
+}
+
+/* ─────────────────────── Tabs (Main Content) ───────────────────── */
+
+#content-tabs {
+    width: 1fr;
+    height: 1fr;
+}
+
+#content-tabs TabPane {
+    padding: 0;
+}
+
+/* ─────────────────────── Hash / List / Set / ZSet Viewers ──────── */
+
+#hash-viewer,
+#list-viewer,
+#set-viewer,
+#zset-viewer,
+#stream-viewer {
+    height: 1fr;
+    layout: vertical;
+}
+
+#hash-table,
+#list-table,
+#set-table,
+#zset-table,
+#stream-table,
+#overview-table,
+#memory-table,
+#stats-table,
+#clients-table,
+#keyspace-table {
+    height: 1fr;
+}
+
+#hash-add-row,
+#list-add-row,
+#set-add-row,
+#zset-add-row {
+    height: 3;
+    layout: horizontal;
+    background: #16213e;
+    border-top: solid #2a2a4a;
+    padding: 0 1;
+    align: center middle;
+}
+
+#hash-add-row Input,
+#list-add-row Input,
+#set-add-row Input,
+#zset-add-row Input {
+    height: 3;
+    background: #1a1a2e;
+    border: solid #2a2a4a;
+    color: #e0e0e0;
+    margin-right: 1;
+}
+
+#hash-add-row Input:focus,
+#list-add-row Input:focus,
+#set-add-row Input:focus,
+#zset-add-row Input:focus {
+    border: solid #00d4ff;
+}
+
+#hash-actions,
+#list-actions,
+#set-actions,
+#zset-actions {
+    height: 3;
+    layout: horizontal;
+    background: #16213e;
+    border-top: solid #2a2a4a;
+    padding: 0 1;
+    align: right middle;
+}
+
+/* ─────────────────────── Console ───────────────────────────────── */
+
+#console-widget {
+    height: 1fr;
+    layout: vertical;
+}
+
+#console-log {
+    height: 1fr;
+    background: #0f0f1a;
+    border: none;
+    scrollbar-size: 1 1;
+}
+
+#console-input {
+    height: 3;
+    background: #1a1a2e;
+    border: solid #2a2a4a;
+    border-top: solid #00d4ff;
+    color: #00d4ff;
+}
+
+#console-input:focus {
+    border: solid #00d4ff;
+}
+
+/* ─────────────────────── Server Info ───────────────────────────── */
+
+#server-info-widget {
+    height: 1fr;
+}
+
+/* ─────────────────────── New Key Dialog ────────────────────────── */
+
+#new-key-dialog {
+    background: #1a1a2e 80%;
+    align: center middle;
+}
+
+#new-key-form {
+    width: 60;
+    height: auto;
+    max-height: 90vh;
+    background: #16213e;
+    border: solid #00d4ff;
+    padding: 1 2;
+}
+
+#new-key-error {
+    height: 1;
+    margin-top: 1;
+    text-align: center;
+}
+
+/* ─────────────────────── TTL Dialog ────────────────────────────── */
+
+#ttl-dialog {
+    background: #1a1a2e 80%;
+    align: center middle;
+}
+
+#ttl-panel {
+    width: 55;
+    height: auto;
+    background: #16213e;
+    border: solid #00d4ff;
+    padding: 1 2;
+}
+
+#ttl-error {
+    height: 1;
+    margin-top: 1;
+    text-align: center;
+}
+
+#ttl-panel Label {
+    color: #aaaacc;
+    margin-top: 1;
+}
+
+#ttl-panel Input {
+    background: #1a1a2e;
+    border: solid #2a2a4a;
+    color: #e0e0e0;
+    margin-top: 1;
+}
+
+#ttl-panel Input:focus {
+    border: solid #00d4ff;
+}
+
+/* ─────────────────────── Pub/Sub Widget ────────────────────────── */
+
+PubSubWidget {
+    padding: 0;
+}
+
+#pubsub-controls {
+    height: auto;
+    padding: 0 1;
+}
+
+#pubsub-controls Input {
+    height: 3;
+    background: #1a1a2e;
+    border: solid #2a2a4a;
+    color: #e0e0e0;
+    width: 1fr;
+    margin-right: 1;
+}
+
+#pubsub-controls Input:focus {
+    border: solid #00d4ff;
+}
+
+#pubsub-log {
+    border: solid $primary;
+    height: 1fr;
+}
+
+/* ─────────────────────── Memory Widget ─────────────────────────── */
+
+MemoryWidget {
+    padding: 0;
+}
+
+#memory-controls {
+    height: auto;
+    padding: 0 1;
+}
+
+#memory-controls Input {
+    height: 3;
+    background: #1a1a2e;
+    border: solid #2a2a4a;
+    color: #e0e0e0;
+    width: 1fr;
+    margin-right: 1;
+}
+
+#memory-controls Input:focus {
+    border: solid #00d4ff;
+}
+
+#memory-status {
+    height: 1;
+    padding: 0 1;
+    color: #888888;
+}
+
+#memory-table {
+    height: 1fr;
+}
+
+/* ─────────────────────── Rename Dialog ─────────────────────────── */
+
+RenameDialog {
+    align: center middle;
+}
+
+#rename-dialog {
+    background: $surface;
+    border: solid $primary;
+    padding: 1 2;
+    width: 60;
+    height: auto;
+}
+
+#rename-dialog .form-title {
+    text-align: center;
+    color: #00d4ff;
+    text-style: bold;
+    margin-bottom: 1;
+}
+
+#rename-dialog Label {
+    color: #aaaacc;
+    margin-top: 1;
+}
+
+#rename-dialog Input {
+    background: #1a1a2e;
+    border: solid #2a2a4a;
+    color: #e0e0e0;
+    margin-top: 1;
+}
+
+#rename-dialog Input:focus {
+    border: solid #00d4ff;
+}
+
+#rename-error {
+    height: 1;
+    margin-top: 1;
+    text-align: center;
+}
+
+/* ─────────────────────── Slow Log table ────────────────────────── */
+
+#slowlog-table {
+    height: 1fr;
+}
+
+/* ─────────────────────── Batch Action Bar ──────────────────────── */
+
+#batch-bar {
+    height: 3;
+    background: #1a1a2e;
+    border-top: solid #ff4444;
+    layout: horizontal;
+    align: center middle;
+    padding: 0 1;
+}
+
+#batch-bar.hidden {
+    display: none;
+}
+
+#batch-count {
+    width: 1fr;
+    color: #ff9900;
+    text-style: bold;
+}
+
+#batch-bar Button {
+    margin-left: 1;
+    height: 1;
+    min-width: 8;
+}
+
+/* Selected tree node highlight */
+.tree-selected-node {
+    color: #ff9900;
+}
+
+/* ─────────────────────── Settings Screen ───────────────────────── */
+
+SettingsScreen {
+    align: center middle;
+}
+
+#settings-panel {
+    background: #16213e;
+    border: solid #00d4ff;
+    padding: 1 2;
+    width: 60;
+    height: auto;
+    max-height: 90vh;
+}
+
+#settings-title {
+    text-align: center;
+    color: #00d4ff;
+    text-style: bold;
+    margin-bottom: 1;
+}
+
+#settings-panel Label {
+    color: #aaaacc;
+    margin-top: 1;
+}
+
+#settings-panel Input {
+    background: #1a1a2e;
+    border: solid #2a2a4a;
+    color: #e0e0e0;
+    margin-top: 0;
+}
+
+#settings-panel Input:focus {
+    border: solid #00d4ff;
+}
+
+#settings-panel Select {
+    margin-top: 0;
+}
+
+#settings-error {
+    height: 1;
+    color: #ff4444;
+    margin-top: 1;
+    text-align: center;
+}
+
+#settings-actions {
+    layout: horizontal;
+    height: auto;
+    align: right middle;
+    margin-top: 1;
+}
+
+#settings-actions Button {
+    margin-left: 1;
+}

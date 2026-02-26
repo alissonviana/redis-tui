@@ -1,0 +1,8 @@
+APP_NAME = "Redis TUI"
+APP_VERSION = "0.1.0"
+DEFAULT_HOST = "localhost"
+DEFAULT_PORT = 6379
+DEFAULT_SCAN_COUNT = 100
+KEY_SEPARATOR = ":"
+CONFIG_DIR = "~/.redis-tui"
+CONFIG_FILE = "connections.json"

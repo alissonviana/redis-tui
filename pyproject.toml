@@ -1,0 +1,20 @@
+[project]
+name = "redis-tui"
+version = "0.1.0"
+description = "A Redis TUI client built with Textual"
+requires-python = ">=3.11"
+dependencies = [
+    "textual>=0.89.0",
+    "redis[hiredis]>=5.0.0",
+    "sshtunnel>=0.4.0",
+]
+
+[project.scripts]
+redis-tui = "redis_tui.__main__:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/redis_tui"]
