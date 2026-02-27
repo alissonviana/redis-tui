@@ -8,6 +8,9 @@ A feature-rich terminal UI client for Redis, built with [Textual](https://github
 
 Manage your Redis instances directly from the terminal — browse keys, edit values, run commands, monitor the server, and more.
 
+
+![WindowsTerminal_ygjZWNAmEh](https://github.com/user-attachments/assets/780b1f01-aa9c-4f33-ac38-5ace10230227)
+
 <!-- screenshot here: replace with actual screenshot/gif -->
 <!-- ![Redis TUI Screenshot](docs/screenshot.png) -->
 
